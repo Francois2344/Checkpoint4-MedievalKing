@@ -48,19 +48,29 @@ const Profile = () => {
   
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/list").then((response) => {
-      setReviewList(response.data);
+    Axios.get("http://localhost:3001/list").then((response) => {
+      (response.data)
+      .catch((error) => {
+        console.error(error.message);
+      });
     });
+
   }, []);
 
   const submitReview = () => {
-    Axios.post("http://localhost:3001/api/list",
+    Axios.post("http://localhost:3001/list",
       {
         name,
         price,
         url,
-      });
-  };
+      })
+      .then((res) => res.data)
+      .then((data) => {
+      console.log(data)
+      })
+      .catch((error) => console.error(error));
+    };
+      
 
   return (
     <DIV>
@@ -102,6 +112,9 @@ const Profile = () => {
           Enregistrer
         </button>
       </form>
+      <div className="wish-list">
+
+      </div>
 
     </DIV>
   );
