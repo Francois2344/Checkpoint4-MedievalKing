@@ -48,19 +48,30 @@ const Profile = () => {
   
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/list").then((response) => {
+    Axios.get("http://localhost:3001/list").then((response) => {
       setReviewList(response.data);
+      console.log(response)
     });
   }, []);
 
-  const submitReview = () => {
-    Axios.post("http://localhost:3001/api/list",
+
+  const submitReview = (event) => {
+    event.preventDefault();
+    Axios.post("http://localhost:3001/list",
       {
         name,
         price,
         url,
-      });
-  };
+      },
+    )
+    .then((res) => res.data)
+    .then((data) => {
+      console.log();
+
+    })
+    .catch((error) => console.error(error));
+};
+ 
 
   return (
     <DIV>
@@ -102,7 +113,9 @@ const Profile = () => {
           Enregistrer
         </button>
       </form>
-
+      <div className='card-list'>
+        {reviewList.map((value) => <li>{value.name}, {value.price + '€'}, {value.url}</li>)}
+      </div>
     </DIV>
   );
 };
