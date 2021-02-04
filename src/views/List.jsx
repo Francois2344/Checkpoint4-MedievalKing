@@ -66,7 +66,7 @@ const Profile = () => {
     )
     .then((res) => res.data)
     .then((data) => {
-      console.log();
+      console.log(data);
 
     })
     .catch((error) => console.error(error));
