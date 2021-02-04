@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React, { useState } from "react";
 import styled from 'styled-components';
 
@@ -49,6 +50,23 @@ const Inscription = () => {
     setBirthday(event.target.value);
   };
 
+  const handleRegister = () => {
+    Axios.post('http://localhost:3001/register',
+    {
+      username,
+      password,
+      email,
+      birthday,
+    },
+    )
+    .then((res) => res.data)
+    .then((data) => {
+      console.log(data);
+
+    })
+    .catch((error) => console.error(error));
+};
+
   return (
     <DIV className="register">
       <form>
@@ -63,11 +81,11 @@ const Inscription = () => {
         />
         <label>Mot de passe</label>
         <input
-          type="password"
+          type="text"
           value={password}
           id="name"
           className="input password"
-          placeholder="Nom"
+          placeholder="Mot de Passe"
           onChange={passwordRegister}
         />
         <label>E-mail</label>
@@ -86,7 +104,7 @@ const Inscription = () => {
           placeholder="Nom"
           onChange={birthdayRegister}
         />
-        <button type="submit">
+        <button type="submit" onClick={handleRegister}>
           S'inscrire
         </button>
       </form>

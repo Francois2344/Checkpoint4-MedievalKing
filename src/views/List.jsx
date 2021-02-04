@@ -53,10 +53,17 @@ const Profile = () => {
 
   const submitReview = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3001/list", {
-      name,
-      price,
-      url,
+    
+    Axios.post("http://localhost:3001/list",
+      {
+        name,
+        price,
+        url,
+      },
+    )
+    .then((res) => res.data)
+    .then((data) => {
+      console.log(data);
     })
       .then((res) => res.data)
       .then((data) => {
