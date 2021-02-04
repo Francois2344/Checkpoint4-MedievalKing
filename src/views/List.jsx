@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import styled from 'styled-components';
+import Checkbox from "@material-ui/core/Checkbox";
+import styled from "styled-components";
 
 const DIV = styled.div`
-display: flex;
-flex-direction: column;
-text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 
-h1 {
-  color: #A21717;
-}
-h2 {
-  color: #A21717;
-}
-input {
-  width: 300px;
+  h1 {
+    color: #a21717;
+  }
+  h2 {
+    color: #a21717;
+  }
+  input {
+    width: 300px;
     height: 60px;
     margin: 10px;
     align-self: center;
     border-radius: 5px;
-    
-}
-button {
-  
-}
+  }
+  button {
+  }
 `;
 
 const Profile = () => {
@@ -31,7 +30,7 @@ const Profile = () => {
   const [price, setPrice] = useState("");
   const [url, setUrl] = useState("");
   const [reviewList, setReviewList] = useState([]);
-  const [submitList, setSubmitList] = useState("");
+  const [checked, setChecked] = useState(true);
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -45,33 +44,35 @@ const Profile = () => {
     setUrl(event.target.value);
   };
 
-  
-
   useEffect(() => {
     Axios.get("http://localhost:3001/list").then((response) => {
       setReviewList(response.data);
-      console.log(response)
+      console.log(response);
     });
   }, []);
 
-
   const submitReview = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3001/list",
-      {
-        name,
-        price,
-        url,
-      },
-    )
-    .then((res) => res.data)
-    .then((data) => {
-      console.log();
-
+    Axios.post("http://localhost:3001/list", {
+      name,
+      price,
+      url,
     })
-    .catch((error) => console.error(error));
-};
- 
+      .then((res) => res.data)
+      .then((data) => {
+        console.log();
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const deleteReview = () => {
+    Axios.delete('http://localhost:3001/list/:id')
+    .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.error(error));;
+  };
 
   return (
     <DIV>
@@ -101,7 +102,7 @@ const Profile = () => {
           onChange={handleChangePrice}
         />
         <input
-          type="url"
+          type="link"
           value={url}
           id="url"
           className="input url"
@@ -113,9 +114,23 @@ const Profile = () => {
           Enregistrer
         </button>
       </form>
-      <div className='card-list'>
-        {reviewList.map((value) => <li>{value.name}, {value.price + '€'}, {value.url}</li>)}
+      <h2>Ma Liste</h2>
+      <div className="card-list">
+        {reviewList.map((value) => {
+          return (
+            <div key={value.id} className="list">
+              <label>
+                {value.name}, {value.price + "€"}, {value.url}
+              </label>
+              <Checkbox value={name} />
+              <div className="remove-button">
+              <button onClick={deleteReview}>Delete</button>
+              </div>
+            </div>
+          );
+        })}
       </div>
+      
     </DIV>
   );
 };
