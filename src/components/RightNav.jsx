@@ -56,7 +56,7 @@ const RightNav = ({ open }) => {
         <Link to="/Profile">Profile</Link>
       </li>
       <li>
-        <Link to="/Profile">Connexion</Link>
+        <Link to="/Connexion">Connexion</Link>
       </li>
     </Slideburger>
   );

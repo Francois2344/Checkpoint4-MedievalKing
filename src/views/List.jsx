@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const DIV = styled.div`
-display: flex;
-flex-direction: column;
-text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 
-h1 {
-  color: #A21717;
-}
-h2 {
-  color: #A21717;
-}
-input {
-  width: 300px;
+  h1 {
+    color: #a21717;
+  }
+  h2 {
+    color: #a21717;
+  }
+  input {
+    width: 300px;
     height: 60px;
     margin: 10px;
     align-self: center;
     border-radius: 5px;
-    
-}
-button {
-  
-}
+  }
+  button {
+  }
 `;
 
 const Profile = () => {
@@ -45,32 +43,28 @@ const Profile = () => {
     setUrl(event.target.value);
   };
 
-  
-
   useEffect(() => {
-    Axios.get("http://localhost:3001/list").then((response) => {
-      (response.data)
+    Axios.get("http://localhost:3001/list")
+      .then((res) => {
+        setReviewList(res.data);
+      })
       .catch((error) => {
         console.error(error.message);
       });
-    });
-
   }, []);
 
   const submitReview = () => {
-    Axios.post("http://localhost:3001/list",
-      {
-        name,
-        price,
-        url,
-      })
+    Axios.post("http://localhost:3001/list", {
+      name,
+      price,
+      url,
+    })
       .then((res) => res.data)
       .then((data) => {
-      console.log(data)
+        console.log(data);
       })
       .catch((error) => console.error(error));
-    };
-      
+  };
 
   return (
     <DIV>
@@ -112,10 +106,7 @@ const Profile = () => {
           Enregistrer
         </button>
       </form>
-      <div className="wish-list">
-
-      </div>
-
+      <div className="wish-list"></div>
     </DIV>
   );
 };
