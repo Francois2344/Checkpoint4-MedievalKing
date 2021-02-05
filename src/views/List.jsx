@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import {Link} from 'react-router-dom';
 import Checkbox from "@material-ui/core/Checkbox";
 import styled from "styled-components";
 
@@ -46,7 +47,7 @@ const Profile = () => {
 
   useEffect(() => {
 
-    Axios.get("http://localhost:3001/list")
+  Axios.get("http://localhost:3001/list")
       .then((res) => {
         setReviewList(res.data);
       })
@@ -55,7 +56,9 @@ const Profile = () => {
       });
   }, []);
 
-  const submitReview = () => {
+
+  const submitReview = (event) => {
+    event.preventDefault();
     Axios.post("http://localhost:3001/list", {
       name,
       price,
@@ -66,35 +69,13 @@ const Profile = () => {
         console.log(data);
       })
       .catch((error) => console.error(error));
-    Axios.get("http://localhost:3001/list").then((response) => {
-      setReviewList(response.data);
-      console.log(response);
-    });
-  }, []);
 
-  const submitReview = (event) => {
-    event.preventDefault();
+  }
     
-    Axios.post("http://localhost:3001/list",
-      {
-        name,
-        price,
-        url,
-      },
-    )
-    .then((res) => res.data)
-    .then((data) => {
-      console.log(data);
-    })
-      .then((res) => res.data)
-      .then((data) => {
-        console.log();
-      })
-      .catch((error) => console.error(error));
-  };
+    
 
-  const deleteReview = () => {
-    Axios.delete('http://localhost:3001/list/:id')
+  const deleteReview = (id) => {
+    Axios.delete(`http://localhost:3001/list/${id}`)
     .then((res) => res.data)
       .then((data) => {
         console.log(data);
@@ -142,26 +123,23 @@ const Profile = () => {
           Enregistrer
         </button>
       </form>
-<
-      <div className="wish-list"></div>
       <h2>Ma Liste</h2>
       <div className="card-list">
         {reviewList.map((value) => {
           return (
-            <div key={value.id} className="list">
+            <div key={value.idlist} className="list">
               <label>
                 {value.name}, {value.price + "€"}, {value.url}
               </label>
               <Checkbox value={name} />
               <div className="remove-button">
-              <button onClick={deleteReview}>Delete</button>
+              <button onClick={() => deleteReview(value.idlist)}>Delete</button>
               </div>
             </div>
           );
         })}
       </div>
-    
-    </DIV>
+  </DIV>
   );
 };
 
