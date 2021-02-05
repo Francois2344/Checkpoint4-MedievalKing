@@ -3,7 +3,6 @@ import Axios from "axios";
 import Linkify from 'react-linkify';
 import Checkbox from "@material-ui/core/Checkbox";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const DIV = styled.div`
   display: flex;
@@ -91,6 +90,7 @@ const Profile = () => {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        window.location.reload()
       })
       .catch((error) => console.error(error));
 
@@ -103,6 +103,7 @@ const Profile = () => {
     .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        window.location.reload()
       })
       .catch((error) => console.error(error));;
   };
@@ -155,7 +156,7 @@ const Profile = () => {
               <label>
                 {value.name}, {value.price + "€"}, <Linkify>{value.url}</Linkify>
               </label>
-              <Checkbox value={name} />
+              <Checkbox />
               <div className="remove-button">
               <button onClick={() => deleteReview(value.idlist)}>Delete</button>
               </div>
