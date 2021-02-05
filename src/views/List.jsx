@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import {Link} from 'react-router-dom';
+import Linkify from 'react-linkify';
 import Checkbox from "@material-ui/core/Checkbox";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const DIV = styled.div`
   display: flex;
@@ -23,6 +24,29 @@ const DIV = styled.div`
     border-radius: 5px;
   }
   button {
+    display: inline-block;
+    text-align: center;
+    border-radius: 2px;
+    line-height: 19px;
+    cursor: pointer;
+    margin-left: -1px;
+    padding: 4px 15px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+    border: 1px solid #c6c6c6;
+    color: #000;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.button:hover {
+}
+
+.button:active {
+    background-color: #f6f6f6;
+    background-image: -webkit-linear-gradient(top,#f6f6f6,#f1f1f1);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
   }
 `;
 
@@ -96,7 +120,7 @@ const Profile = () => {
           type="text"
           value={name}
           id="name"
-          className="input name"
+          className="input-name"
           name="text"
           placeholder="Nom"
           onChange={handleChangeName}
@@ -105,7 +129,7 @@ const Profile = () => {
           type="text"
           value={price}
           id="price"
-          className="input price"
+          className="input-price"
           name="text"
           placeholder="Prix en €"
           onChange={handleChangePrice}
@@ -114,7 +138,7 @@ const Profile = () => {
           type="link"
           value={url}
           id="url"
-          className="input url"
+          className="input-url"
           name="url"
           placeholder="https://example.com"
           onChange={handleChangeUrl}
@@ -129,7 +153,7 @@ const Profile = () => {
           return (
             <div key={value.idlist} className="list">
               <label>
-                {value.name}, {value.price + "€"}, {value.url}
+                {value.name}, {value.price + "€"}, <Linkify>{value.url}</Linkify>
               </label>
               <Checkbox value={name} />
               <div className="remove-button">
@@ -138,6 +162,7 @@ const Profile = () => {
             </div>
           );
         })}
+        <button>Partager ma liste</button>
       </div>
   </DIV>
   );
